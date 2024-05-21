@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://bhlvoe06ppme"]
+[gd_scene load_steps=12 format=3 uid="uid://bhlvoe06ppme"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterScripts/player.gd" id="1_eggie"]
 [ext_resource type="Script" path="res://Scripts/UI-scripts/Reticle.gd" id="2_mfx3v"]
 [ext_resource type="Theme" uid="uid://d2gbw8b0ujkjv" path="res://UITheme/debugPanel.tres" id="3_4h7bg"]
 [ext_resource type="Script" path="res://Scripts/UI-scripts/DebugPanel.gd" id="4_5e7px"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/PlayerStateMachine.gd" id="5_3747f"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_f7t3w"]
 
@@ -189,3 +190,10 @@ layout_mode = 2
 
 [node name="Panel" type="Panel" parent="UI/DebugPanel"]
 layout_mode = 2
+
+[node name="PlayerStateMachine" type="Node" parent="."]
+script = ExtResource("5_3747f")
+
+[node name="IdlePlayerState" type="Node" parent="PlayerStateMachine"]
+
+[node name="WalkingPlayerState" type="Node" parent="PlayerStateMachine"]
