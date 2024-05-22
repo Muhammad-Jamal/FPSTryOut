@@ -16,6 +16,7 @@ var playerMoveSpeed := 5.0
 
 
 func _ready():
+	Globals.player = self
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	Globals.debug.AddProperty("Velocity", playerMoveSpeed)
 
