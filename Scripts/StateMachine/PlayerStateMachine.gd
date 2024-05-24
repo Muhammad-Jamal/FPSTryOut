@@ -13,6 +13,7 @@ func _ready() -> void:
 		else:
 			print("Player State Machine: Incompatible Child Node")
 	currentState.Enter()
+	print(get_children())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

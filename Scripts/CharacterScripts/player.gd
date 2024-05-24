@@ -1,7 +1,7 @@
 extends CharacterBody3D
 class_name Player
 
-const JUMP_VELOCITY = 4.5
+const JUMP_VELOCITY = 6.5
 #abc
 @onready var camera_holder = $CameraHolder
 @onready var animation_player = $AnimationPlayer
@@ -9,6 +9,8 @@ const JUMP_VELOCITY = 4.5
 
 @export var hRotationSpeed:float = 10.0
 @export var vRotationSpeed:float = 10.0
+@export var accelaration:float = 0.1
+@export var deccelaration:float = 0.2
 
 var isCrouching:bool = false
 var gravity:float = 9.8
@@ -18,7 +20,7 @@ var playerMoveSpeed := 5.0
 func _ready():
 	Globals.player = self
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	Globals.debug.AddProperty("Velocity", playerMoveSpeed)
+	Globals.debug.AddProperty("Velocity", velocity.length())
 
 func _input(event):
 	if event.is_action_pressed("crouch"):
@@ -45,12 +47,12 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("left", "right", "forward", "backward")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
-		velocity.x = direction.x * playerMoveSpeed
-		velocity.z = direction.z * playerMoveSpeed
+		velocity.x = lerp(velocity.x, direction.x * playerMoveSpeed, accelaration * delta)
+		velocity.z = lerp(velocity.z, direction.z * playerMoveSpeed, accelaration * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0, playerMoveSpeed)
-		velocity.z = move_toward(velocity.z, 0, playerMoveSpeed)
-	Globals.debug.UpdateProperty("Velocity", playerMoveSpeed)
+		velocity.x = move_toward(velocity.x, 0, deccelaration * delta)
+		velocity.z = move_toward(velocity.z, 0, deccelaration * delta)
+	Globals.debug.UpdateProperty("Velocity", velocity.length())
 	move_and_slide()
 
 
