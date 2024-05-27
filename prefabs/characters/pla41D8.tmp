@@ -1,11 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://bhlvoe06ppme"]
+[gd_scene load_steps=17 format=3 uid="uid://bhlvoe06ppme"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterScripts/player.gd" id="1_eggie"]
 [ext_resource type="Script" path="res://Scripts/UI-scripts/Reticle.gd" id="2_mfx3v"]
 [ext_resource type="Theme" uid="uid://d2gbw8b0ujkjv" path="res://UITheme/debugPanel.tres" id="3_4h7bg"]
 [ext_resource type="Script" path="res://Scripts/UI-scripts/DebugPanel.gd" id="4_5e7px"]
-[ext_resource type="Script" path="res://Scripts/StateMachine/StateMachine.gd" id="5_apot0"]
-[ext_resource type="Script" path="res://Scripts/StateMachine/GroundState.gd" id="6_mw7x7"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/PlayerStateMachine.gd" id="5_3747f"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/IdlePlayerState.gd" id="6_b1mfd"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/WalkingPlayerState.gd" id="7_ou868"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/MovementStates.gd" id="7_tobpb"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/SprintingPlayerState.gd" id="8_al1l7"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/CrouchPlayerState.gd" id="9_kgxw7"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_f7t3w"]
 
@@ -154,13 +158,12 @@ _data = {
 "crouch": SubResource("Animation_7eyip")
 }
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera_holder", "animation_player", "head_collision_check")]
+[node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_eggie")
 hRotationSpeed = 15.0
 vRotationSpeed = 15.0
-camera_holder = NodePath("CameraHolder")
-animation_player = NodePath("AnimationPlayer")
-head_collision_check = NodePath("HeadCollisionCheck")
+accelaration = 10.0
+deccelaration = 15.0
 
 [node name="Graphic" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -210,7 +213,6 @@ grow_vertical = 2
 script = ExtResource("2_mfx3v")
 
 [node name="DebugPanel" type="PanelContainer" parent="UI"]
-visible = false
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 0
 offset_left = 20.0
@@ -229,9 +231,22 @@ layout_mode = 2
 [node name="Panel" type="Panel" parent="UI/DebugPanel"]
 layout_mode = 2
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("currentState")]
-script = ExtResource("5_apot0")
-currentState = NodePath("GroundState")
+[node name="PlayerStateMachine" type="Node" parent="." node_paths=PackedStringArray("currentState", "player")]
+script = ExtResource("5_3747f")
+currentState = NodePath("IdlePlayerState")
+player = NodePath("..")
 
-[node name="GroundState" type="Node" parent="StateMachine"]
-script = ExtResource("6_mw7x7")
+[node name="IdlePlayerState" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("6_b1mfd")
+
+[node name="MovementStates" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("7_tobpb")
+
+[node name="WalkingPlayerState" type="Node" parent="PlayerStateMachine/MovementStates"]
+script = ExtResource("7_ou868")
+
+[node name="SprintingPlayerState" type="Node" parent="PlayerStateMachine/MovementStates"]
+script = ExtResource("8_al1l7")
+
+[node name="CrouchPlayerState" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("9_kgxw7")

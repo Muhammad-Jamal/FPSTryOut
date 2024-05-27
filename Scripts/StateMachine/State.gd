@@ -1,16 +1,17 @@
+class_name State 
 extends Node
-class_name State
 
-signal transition(newStateName: StringName)
+signal transition(nextState:State)
 
 func Enter() -> void:
 	pass
-
+	
 func Exit() -> void:
 	pass
 
-func Update(delta: float) -> void:
+func Update(delta:float) -> void:
 	pass
 
-func PhysicsUpdate(delta: float) -> void:
+func PhysicsUpdate(delta:float) -> void:
 	pass
+
