@@ -13,6 +13,7 @@ config_version=5
 config/name="fpsNEW"
 run/main_scene="res://Levels/Main.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
+run/max_fps=20
 config/icon="res://icon.svg"
 
 [autoload]

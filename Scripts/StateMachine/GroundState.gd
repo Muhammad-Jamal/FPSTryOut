@@ -1,12 +1,23 @@
 class_name GroundState
 extends State
 
-@onready var actor:Player = $"../.."
+#@onready var actor:Player = $"../.."
+func Enter():
+	actor = owner
 
 func PhysicsUpdate(delta:float) -> void:
-	var dir := Input.get_vector("left","right","forward","backward")
-	if Input.is_action_just_pressed("forward"):
-		print(actor.basis)
-	actor.movePlayer(actor.basis * Vector3(dir.x, 0.0 , dir.y))
-	if Input.is_action_just_pressed("forward"):
-		print(actor.basis)
+	if actor.is_on_floor() and actor.inputHandler.getJumpPressed():
+		handleJump()
+	moveActor()
+	if not actor.is_on_floor():
+		transition.emit("AirState")
+
+	
+
+func moveActor() -> void:
+	var inputDirection = actor.inputHandler.getInputDirection()
+	var moveDirection = actor.basis * Vector3(inputDirection.x, 0.0 , inputDirection.y)
+	actor.movePlayer(moveDirection)
+
+func handleJump() -> void:
+	actor.velocity.y = actor.JUMP_VELOCITY
