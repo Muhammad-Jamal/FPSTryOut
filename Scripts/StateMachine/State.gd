@@ -2,7 +2,7 @@ class_name State
 extends Node
 
 signal transition(nextState: String)
-var actor:CharacterBody3D
+var actor:Player
 
 func Enter() -> void:
 	actor = owner

@@ -10,19 +10,17 @@ var isCrouchPressed:bool = false
 func _ready():
 	pass # Replace with function body.
 
-func _input(event):
-	isJumpPressed = Input.is_action_pressed("jump")
-	isCrouchPressed = Input.is_action_pressed("jump")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	inputDirection = Input.get_vector("left","right","forward","backward")
 	isSprintPressed = Input.is_action_pressed("sprint")
-	
+	isJumpPressed = Input.is_action_just_pressed("jump")
+	isCrouchPressed = Input.is_action_just_pressed("crouch")
 	
 func getInputDirection() -> Vector2:
 	return inputDirection
-	
+
 func getJumpPressed() -> bool:
 	return isJumpPressed
 

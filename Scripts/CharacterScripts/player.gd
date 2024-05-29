@@ -3,7 +3,6 @@ class_name Player
 
 const JUMP_VELOCITY = 6.5
 
-
 @export var inputHandler:InputHandler
 @export var camera_holder:Node3D
 @export var animation_player:AnimationPlayer
@@ -30,17 +29,18 @@ func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
 
-func movePlayer(direction:Vector3):
+func SetPlayerVelocity(direction:Vector3):
 	velocity.x = platformSpeed.x + lerp(velocity.x, direction.x * speed, accelaration )
 	velocity.z = platformSpeed.z + lerp(velocity.z, direction.z * speed, accelaration )
-	move_and_slide()
 
-func applyGravity():
-	var velocityY = velocity.y
-	velocity.y -= gravity * get_process_delta_time()
+func SetPlayerJumpVelocity(jumpHeight:float) -> void:
+	var v = sqrt(2 * jumpHeight * gravity)
+	velocity.y = v 
+
+func ApplyGravity():
+	velocity.y -= gravity * get_physics_process_delta_time()
+	print(velocity.y)
 	#velocity.y = velocityY #move_toward(velocity.y, velocityY , gravity * get_process_delta_time() )
-	print(velocity)
-	move_and_slide()
 
 #always rotate on both H/V with mouse
 func rotatePlayerHorizontallyWithMouse(rotationX:float):

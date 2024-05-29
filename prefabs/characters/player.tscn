@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bhlvoe06ppme"]
+[gd_scene load_steps=13 format=3 uid="uid://bhlvoe06ppme"]
 
 [ext_resource type="Script" path="res://Scripts/CharacterScripts/player.gd" id="1_eggie"]
 [ext_resource type="Script" path="res://Scripts/UI-scripts/Reticle.gd" id="2_mfx3v"]
@@ -6,8 +6,6 @@
 [ext_resource type="Theme" uid="uid://d2gbw8b0ujkjv" path="res://UITheme/debugPanel.tres" id="3_4h7bg"]
 [ext_resource type="Script" path="res://Scripts/UI-scripts/DebugPanel.gd" id="4_5e7px"]
 [ext_resource type="Script" path="res://Scripts/StateMachine/StateMachine.gd" id="5_apot0"]
-[ext_resource type="Script" path="res://Scripts/StateMachine/GroundState.gd" id="6_mw7x7"]
-[ext_resource type="Script" path="res://Scripts/StateMachine/AirState.gd" id="7_b0tcd"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_f7t3w"]
 
@@ -237,10 +235,4 @@ layout_mode = 2
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("currentState")]
 script = ExtResource("5_apot0")
-currentState = NodePath("GroundState")
-
-[node name="GroundState" type="Node" parent="StateMachine"]
-script = ExtResource("6_mw7x7")
-
-[node name="AirState" type="Node" parent="StateMachine"]
-script = ExtResource("7_b0tcd")
+currentState = NodePath("")
